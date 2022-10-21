@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: php-pesbuk
+  namespace: staging
+spec:
+  selector:
+    matchLabels:
+      app: pesbuk
+  template:
+    metadata:
+      labels:
+        app: pesbuk
+    spec:
+      containers:
+      - name: pesbuk
+        image: hiro99/pesbuk:0.0.1-stg
+        ports:
+        - containerPort: 80
+        env:
+          - name: DB_HOST
+            value: service-mysql-pes.staging.svc.cluster.local
+          - name: DB_USER
+            value: root
+          - name: DB_PASS
+            value: pesbuk
+          - name: DB_NAME
+            value: dbsosmed

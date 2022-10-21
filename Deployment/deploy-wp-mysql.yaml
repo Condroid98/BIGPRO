@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wp-mysql
+  namespace: staging
+spec:
+  selector:
+    matchLabels:
+      app: wp-mysql
+  template:
+    metadata:
+      labels:
+        app: wp-mysql
+    spec:
+      containers:
+      - name: wp-mysql
+        image: mysql:5.7
+        args:
+          - "--ignore-db-dir=lost+found"
+        envFrom:
+          - secretRef:
+              name: wp-mysql-secret           
+        ports:
+        - containerPort: 3306
+        volumeMounts:
+        - name: mysql-wp-data
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: mysql-wp-data
+        persistentVolumeClaim:
+          claimName: wp-mysql-pvc

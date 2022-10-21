@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pes-mysql
+  namespace: staging
+spec:
+  selector:
+    matchLabels:
+      app: pes-mysql
+  template:
+    metadata:
+      labels:
+        app: pes-mysql
+    spec:
+      containers:
+      - name: pes-mysql
+        image: mysql:5.7
+        args:
+          - "--ignore-db-dir=lost+found"
+        envFrom:
+          - secretRef:
+              name: pes-mysql-secret           
+        ports:
+        - containerPort: 3306
+        volumeMounts:
+        - name: mysql-pes-data
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: mysql-pes-data
+        persistentVolumeClaim:
+          claimName: pes-mysql-pvc
