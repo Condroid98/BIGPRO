@@ -4,7 +4,7 @@ metadata:
   name: laravel
   namespace: staging
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   selector: 
     app: laravel
   ports:
