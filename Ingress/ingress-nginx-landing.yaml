@@ -7,7 +7,7 @@ metadata:
     kubernetes.io/ingress.class: "nginx"
 spec:
   rules:
-  - host: land-dev.cupu69.xyz
+  - host: landing-stg.pastikerja.xyz
     http: 
       paths:
       - backend:

@@ -3,6 +3,12 @@ kind: Deployment
 metadata:
   name: php-pesbuk
   namespace: staging
+  labels:
+    app: pesbuk
+    name: pesbuk
+    keel.sh/policy: major
+    keel.sh/trigger: poll
+    keel.sh/approvals: "1"
 spec:
   selector:
     matchLabels:
@@ -14,15 +20,15 @@ spec:
     spec:
       containers:
       - name: pesbuk
-        image: hiro99/pesbuk:0.0.1-stg
+        image: 637631085186.dkr.ecr.ap-southeast-1.amazonaws.com/pesbuk:0.0.3-stg
         ports:
         - containerPort: 80
         env:
-          - name: DB_HOST
+          - name: HOST
             value: service-mysql-pes.staging.svc.cluster.local
-          - name: DB_USER
+          - name: USER
             value: root
-          - name: DB_PASS
+          - name: PASS
             value: pesbuk
-          - name: DB_NAME
+          - name: DBNAME
             value: dbsosmed

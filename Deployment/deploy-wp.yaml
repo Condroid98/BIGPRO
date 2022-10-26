@@ -3,6 +3,12 @@ kind: Deployment
 metadata:
   name: wordpress
   namespace: staging
+  labels:
+    app: wordpress
+    name: wordpress
+    keel.sh/policy: major
+    keel.sh/trigger: poll
+    keel.sh/approvals: "1"
 spec:
   selector:
     matchLabels:
@@ -14,7 +20,7 @@ spec:
     spec:
       containers:
       - name: wordpress
-        image: wordpress:5.8.3-php7.4-apache
+        image: 637631085186.dkr.ecr.ap-southeast-1.amazonaws.com/wordpress:0.0.2-stg
         env:
         - name: WORDPRESS_DB_HOST
           value: service-mysql-wp.staging.svc.cluster.local

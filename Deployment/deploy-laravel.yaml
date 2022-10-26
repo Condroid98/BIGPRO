@@ -3,6 +3,12 @@ kind: Deployment
 metadata:
   name: laravel
   namespace: staging
+  labels:
+    app: laravel
+    name: laravel
+    keel.sh/policy: major
+    keel.sh/trigger: poll
+    keel.sh/approvals: "1"
 spec:
   selector:
     matchLabels:
@@ -14,7 +20,7 @@ spec:
     spec:
       containers:
       - name: laravel
-        image: hiro99/laravel:0.0.1-stg
+        image: 637631085186.dkr.ecr.ap-southeast-1.amazonaws.com/laravel:0.0.1-stg
         ports:
         - containerPort: 80
           name: laravel

@@ -3,19 +3,26 @@ kind: Deployment
 metadata:
   name: landing-page
   namespace: staging
+  labels:
+    app: landing-page
+    name: landing-page
+    keel.sh/policy: major
+    keel.sh/trigger: poll
+    keel.sh/approvals: "1"
 spec:	
   selector:
     matchLabels:
       app: landing-page
   template:
     metadata:
+      name: landing-page
       labels:
         app: landing-page
     spec:
-      imagePullSecrets:
-      - name: dockerhub-private
+#      imagePullSecrets:
+#      - name: dockerhub-private
       containers:
       - name: landing-page
-        image: hiro99/landing-page:0.0.1-stg
+        image: 637631085186.dkr.ecr.ap-southeast-1.amazonaws.com/landing:0.0.16-stg
         ports:
         - containerPort: 80
