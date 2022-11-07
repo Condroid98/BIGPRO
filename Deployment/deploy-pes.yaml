@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: php-pesbuk
+  namespace: production
+  labels:
+    app: pesbuk
+    name: pesbuk
+    keel.sh/policy: major
+    keel.sh/trigger: poll
+    keel.sh/approvals: "1"
+spec:
+  selector:
+    matchLabels:
+      app: pesbuk
+  template:
+    metadata:
+      labels:
+        app: pesbuk
+    spec:
+      containers:
+      - name: pesbuk
+        image: 637631085186.dkr.ecr.ap-southeast-1.amazonaws.com/pesbuk:0.0.3-prod
+        ports:
+        - containerPort: 80
+        env:
+          - name: HOST
+            value: "dbsosmed.c7po17ayxlr1.ap-southeast-1.rds.amazonaws.com"
+          - name: USER
+            value: admin
+          - name: PASS
+            value: devops123
+          - name: DBNAME
+            value: dbsosmed

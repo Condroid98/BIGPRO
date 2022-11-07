@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wordpress
+  namespace: production
+  labels:
+    app: wordpress
+    name: wordpress
+    keel.sh/policy: major
+    keel.sh/trigger: poll
+    keel.sh/approvals: "1"
+spec:
+  selector:
+    matchLabels:
+      app: wordpress
+  template:
+    metadata:
+      labels:
+        app: wordpress
+    spec:
+      containers:
+      - name: wordpress
+        image: 637631085186.dkr.ecr.ap-southeast-1.amazonaws.com/wordpress:0.0.2-prod
+        env:
+        - name: WORDPRESS_DB_HOST
+          value: "dbsosmed.c7po17ayxlr1.ap-southeast-1.rds.amazonaws.com"
+        - name: WORDPRESS_DB_PASSWORD
+          value: devops123
+        - name: WORDPRESS_DB_USER
+          value: admin
+        - name: WORDPRESS_DB_NAME
+          value: wordpress
+        ports:
+        - containerPort: 80
+          name: wordpress
+        volumeMounts:
+        - name: wordpress-data
+          mountPath: /var/www
+      volumes:
+        - name: wordpress-data
+          persistentVolumeClaim:
+            claimName: wp-pvc

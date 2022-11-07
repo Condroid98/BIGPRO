@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: laravel
+  namespace: production
+  labels:
+    app: laravel
+    name: laravel
+    keel.sh/policy: major
+    keel.sh/trigger: poll
+    keel.sh/approvals: "1"
+spec:
+  selector:
+    matchLabels:
+      app: laravel
+  template:
+    metadata:
+      labels:
+        app: laravel
+    spec:
+      containers:
+      - name: laravel
+        image: 637631085186.dkr.ecr.ap-southeast-1.amazonaws.com/laravel:0.0.1-prod
+        ports:
+        - containerPort: 80
+          name: laravel
